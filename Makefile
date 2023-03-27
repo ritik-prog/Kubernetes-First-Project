@@ -33,3 +33,13 @@ create_kind_cluster: install_kind install_kubectl create_docker_registry
 create_kind_cluster_with_registry:
 	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind
 
+create_kind_cluster_with_registry:
+	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind
+
+install_ingress_controller:
+	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml && \
+	sleep 5 && \
+	kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=90s

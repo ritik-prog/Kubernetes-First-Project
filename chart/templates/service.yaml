@@ -3,16 +3,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: explorecalifornia.com
-  name: explorecalifornia-com
+    app: {{ .Values.appName }}
+  name: {{ .Values.serviceName }}
 spec:
   ports:
-  - name: 3000-80
-    port: 3000
+  - name: http
+    port: {{ .Values.servicePort }}
     protocol: TCP
     targetPort: 80
   selector:
-    app: explorecalifornia.com
+    app: {{ .Values.appName }}
   type: ClusterIP
 status:
   loadBalancer: {}
